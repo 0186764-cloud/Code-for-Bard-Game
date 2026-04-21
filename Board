@@ -49,7 +49,3 @@ void loop() {
   delay(5000);
   lcd.clear();
 }
-
-void Rolldie(){
-  if (o = 1)
-}
