@@ -1,28 +1,40 @@
 #include <LiquidCrystal_I2C.h>
+#include <SPI.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_PCD8544.h>
 #include <Wire.h>;
 
 const int led = 12;
 int o;
 
+Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 void setup() {
   // put your setup code here, to run once:
   pinMode(led, OUTPUT);
   lcd.init();
   lcd.backlight();
+  display.begin();
+
+  display.setContrast(50);
+
+  display.clearDisplay();
+  display.fillCircle(32, 24, 5, BLACK);
+  display.fillCircle(52, 24, 5, BLACK);
+  display.display();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   digitalWrite(led, HIGH);
-  int o = random(1, 4);
-  if (o < 2){
+  int o = random(1, 7);
+  if (o < 4){
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(6,1);
     lcd.print("Calm");
     }
-    else if (o > 2){
+    else if (o > 5){
       lcd.setCursor(6, 0);
       lcd.print("It's");
       lcd.setCursor(3,1);
@@ -36,4 +48,8 @@ void loop() {
     }
   delay(5000);
   lcd.clear();
+}
+
+void Rolldie(){
+  if (o = 1)
 }
