@@ -5,13 +5,14 @@
 #include <Wire.h>;
 
 const int led = 12;
-int o;
+int DiceRoll;
+int outcome;
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 void setup() {
   // put your setup code here, to run once:
-  pinMode(led, OUTPUT);
+  Serial.begin(9600);
   lcd.init();
   lcd.backlight();
   display.begin();
@@ -19,22 +20,33 @@ void setup() {
   display.setContrast(50);
 
   display.clearDisplay();
-  display.fillCircle(32, 24, 5, BLACK);
-  display.fillCircle(52, 24, 5, BLACK);
+  //display.fillCircle(32, 24, 5, BLACK);
+  //display.fillCircle(52, 24, 5, BLACK);
   display.display();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(led, HIGH);
-  int o = random(1, 7);
-  if (o < 4){
-    lcd.setCursor(6, 0);
-    lcd.print("It's");
-    lcd.setCursor(6,1);
-    lcd.print("Calm");
+  Rolldie();
+  Serial.println(DiceRoll);
+}
+
+void Rolldie(){
+  int DiceRoll = random(1, 7);
+  display.setTextSize(1);
+  display.setTextColor(BLACK);
+  display.setCursor(0,0);
+  display.print("Value: ");
+  display.print(DiceRoll);
+  display.display();
+  int outcome = DiceRoll;
+  if (outcome < 4){
+      lcd.setCursor(6, 0);
+      lcd.print("It's");
+      lcd.setCursor(6,1);
+      lcd.print("Calm");
     }
-    else if (o > 5){
+    else if (outcome > 5){
       lcd.setCursor(6, 0);
       lcd.print("It's");
       lcd.setCursor(3,1);
@@ -46,6 +58,7 @@ void loop() {
       lcd.setCursor(5,1);
       lcd.print("A Storm");
     }
-  delay(5000);
+  delay(2500);
   lcd.clear();
+  display.clearDisplay();
 }
