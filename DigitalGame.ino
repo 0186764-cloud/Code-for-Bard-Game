@@ -15,7 +15,8 @@ void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available() > 0){
 
-    int PIB = Serial.parseInt(); //PIB stands for Pots in Bay
+    if (Question == 1){
+      int PIB = Serial.parseInt(); //PIB stands for Pots in Bay
 
     if (PIB >= 0 && PIB <= InitialPots){
       int PRB = InitialPots - PIB;
@@ -30,28 +31,28 @@ void loop() {
     else {
       Serial.println("Invalid Number");
     }
-    delay(1000);
+    delay(2000);
     Question = 2;
     Serial.println("How many would you like to put at sea?");
-  }
+    }
     else if (Question == 2){
       POS = Serial.parseInt();
+      if (POS >= 0 && POS <= PRB){
+        int PRS = PRB - POS;
+        Serial.print("You've put ");
+        Serial.println(POS);      
+        Serial.print("pots at sea.");
 
-        if (POS >= 0 && POS <= PRB){
-          int PRS = PRB - POS;
-            Serial.print("You've put ");
-            Serial.println(POS);      
-            Serial.print("pots at sea.");
+        Serial.print("Pots Remaining:");      
+        Serial.println(PRS);
 
-            Serial.print("Pots Remaining:");      
-            Serial.println(PRS);
-
-            Serial.println("\nDone.");
-            Question = 3;
-          }
-          else {
-            Serial.println("Invalid Number");
-          }
-          delay(2000);
-        }    
+        Serial.println("\nDone.");
+        Question = 3;
       }
+      else {
+        Serial.println("Invalid Number");
+      }
+      delay(2000);
+    }    
+  }
+}
