@@ -1,4 +1,9 @@
 int InitialPots = 10;
+int PIB = 0;
+int PRB = 0;
+int POS = 0;
+
+int Question = 1;
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,25 +29,29 @@ void loop() {
     }
     else {
       Serial.println("Invalid Number");
-      delay(1000);
     }
-
+    delay(1000);
+    Question = 2;
     Serial.println("How many would you like to put at sea?");
-    if (Serial.available() > 0){
-      int POS = Serial.parseInt();
-      int PRB = InitialPots - PIB;
-      int PRS = PRB - POS;
-        if (POS >= 0 && POS <= PRB){
-          Serial.print("You've put ");
-          Serial.println(PIB);      
-          Serial.print("pots at sea.");
-          Serial.print("Pots Remaining:");      
-          Serial.println(PRS);
-        }
-        else {
-          Serial.println("Invalid Number");
-        }
-        delay(2000);
-      }
-    }
   }
+    else if (Question == 2){
+      POS = Serial.parseInt();
+
+        if (POS >= 0 && POS <= PRB){
+          int PRS = PRB - POS;
+            Serial.print("You've put ");
+            Serial.println(POS);      
+            Serial.print("pots at sea.");
+
+            Serial.print("Pots Remaining:");      
+            Serial.println(PRS);
+
+            Serial.println("\nDone.");
+            Question = 3;
+          }
+          else {
+            Serial.println("Invalid Number");
+          }
+          delay(2000);
+        }    
+      }
