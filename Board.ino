@@ -46,6 +46,7 @@ void loop() {
   delay(1000);
   display.clearDisplay();
   digitalWrite(led, LOW);
+  lcd.clear();
 }
 
 void Rolldie() {
