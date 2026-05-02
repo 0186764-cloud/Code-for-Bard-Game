@@ -5,8 +5,8 @@
 #include <Wire.h>;
 
 const int led = 13;
-int DiceRoll;
 int outcome;
+int DiceRoll = 5;
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -20,37 +20,10 @@ void setup() {
 
   display.setContrast(50);
   display.clearDisplay();
-
+  //int DiceRoll = random(1, 7);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  Rolldie();
-  display.fillCircle(32, 12, 4, BLACK);
-  display.display();
-  delay(1000);
-  display.fillCircle(52, 12, 4, BLACK);
-  display.display();
-  delay(1000);
-  display.fillCircle(32, 24, 4, BLACK);
-  display.display();
-  delay(1000);
-  display.fillCircle(52, 24, 4, BLACK);
-  display.display();
-  delay(1000);
-  display.fillCircle(32, 36, 4, BLACK);
-  display.display();
-  delay(1000);
-  display.fillCircle(52, 36, 4, BLACK);
-  display.display();
-  delay(1000);
-  display.clearDisplay();
-  digitalWrite(led, LOW);
-  lcd.clear();
-}
-
-void Rolldie() {
-  int DiceRoll = random(1, 7);
+void Outcome() {
   display.setTextSize(1);
   display.setTextColor(BLACK);
   display.setCursor(0, 0);
@@ -75,4 +48,55 @@ void Rolldie() {
     lcd.setCursor(5, 1);
     lcd.print("A Storm");
   }
+}
+
+void RollDice(){
+  if (DiceRoll > 0){
+    display.fillCircle(32, 12, 4, BLACK);
+    display.display();
+    delay(1000);
+
+    if (DiceRoll > 1){
+      display.fillCircle(52, 12, 4, BLACK);
+      display.display();
+      delay(1000);
+
+      if (DiceRoll > 2){
+        display.fillCircle(32, 24, 4, BLACK);
+        display.display();
+        delay(1000);
+
+        if (DiceRoll > 3){
+          display.fillCircle(52, 24, 4, BLACK);
+          display.display(); 
+          delay(1000);
+
+          if (DiceRoll > 4){
+            display.fillCircle(32, 36, 4, BLACK);
+            display.display();
+            delay(1000);
+
+            if (DiceRoll > 5){
+              display.fillCircle(52, 36, 4, BLACK);
+              display.display();
+              delay(1000);
+            }
+          }
+        }
+      }
+    }
+  }
+  else{
+    //nothing here,  it's impossible to mess up
+  }
+    delay(1000);  
+    display.clearDisplay();
+    digitalWrite(led, LOW);
+    lcd.clear();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Outcome();
+  RollDice();
 }
