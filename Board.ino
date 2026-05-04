@@ -6,7 +6,7 @@
 
 const int led = 13;
 int outcome;
-int DiceRoll = 5;
+int DiceRoll;
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -20,10 +20,9 @@ void setup() {
 
   display.setContrast(50);
   display.clearDisplay();
-  //int DiceRoll = random(1, 7);
 }
 
-void Outcome() {
+void Outcome(int DiceRoll) {
   display.setTextSize(1);
   display.setTextColor(BLACK);
   display.setCursor(0, 0);
@@ -50,7 +49,7 @@ void Outcome() {
   }
 }
 
-void RollDice(){
+void RollDice(int DiceRoll){
   if (DiceRoll > 0){
     display.fillCircle(32, 12, 4, BLACK);
     display.display();
@@ -97,6 +96,7 @@ void RollDice(){
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Outcome();
-  RollDice();
+  int DiceRoll = random(1, 7);
+  Outcome(DiceRoll);
+  RollDice(DiceRoll);
 }
