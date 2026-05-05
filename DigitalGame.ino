@@ -16,7 +16,7 @@ void loop() {
 
   if (Serial.available() > 0) {
 
-    String input = Serial.readStringUntil('\n'); // ✅ read full line
+    String input = Serial.readStringUntil('\n'); //Read Full line
     input.trim(); // remove spaces/newlines
 
     int value = input.toInt(); // convert to int
