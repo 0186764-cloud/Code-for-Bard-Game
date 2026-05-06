@@ -102,18 +102,19 @@ void RollDice(int DiceRoll){
     digitalWrite(led, LOW);
     lcd.clear();
 }
-
 void loop() {
-  // put your main code here, to run repeatedly:
-   if (Serial.available() > 0) {
 
-    String input = Serial.readStringUntil('\n'); //Read Full line
-    input.trim(); // remove spaces/newlines
+if (Serial.available() > 0) {
 
-    int value = input.toInt(); // convert to int
+// Read user input
+  String input = Serial.readStringUntil('\n');
+  input.trim();
+
+// Convert input into integer
+  int value = input.toInt();
 
 // STEP 1
-    if (step == 1) {
+  if (step == 1) {
 
     PIB = value;
 
@@ -129,17 +130,13 @@ void loop() {
 
       Serial.println("\nHow many would you like to put at sea?");
       step = 2;
-
-    } else {
-    Serial.println("Invalid number. Try again:");
     }
-  }
 
 // STEP 2
-  else if (step == 2) {
+    else if (step == 2) {
 
-  POS = value;
-
+    POS = value;
+      
     if (POS >= 0 && POS <= PRB) {
       int PRS = PRB - POS;
 
@@ -161,4 +158,31 @@ void loop() {
   int DiceRoll = random(1, 7);
   Outcome(DiceRoll);
   RollDice(DiceRoll);
+}
+// STEP 3
+    else if (step == 3) {
+
+    PurchasedPots = value;
+    if (PurchasedPots >= 0) {
+          int TotalPots = PRB + PurchasedPots;
+
+          Serial.print("You've purchased: ");
+          Serial.print(PurchasedPots);
+          Serial.println(" pots.");
+
+          Serial.print("Total Pots Now: ");
+          Serial.println(TotalPots);
+
+          Serial.println("n\ Process complete.");
+          int step = 1;
+
+        } else {
+          Serial.println("Invalid number. Try again:");
+        }
+        delay(5000);
+        int step = 1;
+        Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
+        Serial.println("How many would you like to put at bay?");
+    }
+  }
 }
