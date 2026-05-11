@@ -12,8 +12,8 @@ int PurchasedPots = 0;
 int PIB = -1;
 int PRB = 0;
 int POS = -1;
-
 int step = 1;
+int Money = 100;
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -98,10 +98,35 @@ void RollDice(int DiceRoll){
   else{
     //nothing here,  it's impossible to mess up
   }
-    delay(5000);  
+    delay(2500);  
     display.clearDisplay();
     digitalWrite(led, LOW);
     lcd.clear();
+}
+
+void EarnMoney(int outcome){
+  if (outcome < 4){
+    int earnings = PIB + (POS * 2);
+    Money += earnings;
+    Serial.print("Successfull trip! Earned $");
+    Serial.println(earnings);
+  }else if(outcome > 5){
+    int Loss = POS * 10;
+    Money -= Loss;
+    Serial.print("Bad weather! Lost $");
+    Serial.println(Loss);
+  }else {
+    int earnings = PIB*2 + (POS * 4);
+    Money += earnings;
+    Serial.print("Successfull trip! Earned $");
+    Serial.println(earnings);
+  }
+  delay(5000);
+  step = 1;
+  Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
+  Serial.print("You currently have $");
+  Serial.println(Money);
+  Serial.println("How many would you like to put at bay?");
 }
 void loop() {
 
@@ -151,7 +176,6 @@ if (Serial.available() > 0) {
       Serial.println(PRS);
 
       Serial.println("\nDone.");
-      step = 3;
 
     } else {
         Serial.println("Invalid number. Try again:");
@@ -159,6 +183,7 @@ if (Serial.available() > 0) {
       int DiceRoll = random(1, 7);
       Outcome(DiceRoll);
       RollDice(DiceRoll);
+      EarnMoney(outcome);
     }
   }
 }
