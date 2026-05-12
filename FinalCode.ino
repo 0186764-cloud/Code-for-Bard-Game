@@ -13,7 +13,9 @@ int PIB = -1;
 int PRB = 0;
 int POS = -1;
 int step = 1;
-int Money = 100;
+int Money = 10;
+int PotCost = 2;
+int TotalPots = InitialPots;
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -45,18 +47,40 @@ void Outcome(int DiceRoll) {
     lcd.print("It's");
     lcd.setCursor(6, 1);
     lcd.print("Calm");
-  } else if (outcome > 5) {
+    delay(1000);
+    int earnings = PIB + (POS * 2);
+    Money += earnings;
+    Serial.print("Successfull trip! Earned $");
+    Serial.println(earnings);
+  } 
+  else if (outcome > 5) {
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(3, 1);
     lcd.print("A CALAMITY");
     digitalWrite(led, HIGH);
-  } else {
+    delay(1000);
+    int Loss = POS;
+    TotalPots -= Loss;
+    Serial.print("Bad weather! Lost ");
+    Serial.println(Loss);
+    Serial.print("pots");
+  } 
+  else {
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(5, 1);
     lcd.print("A Storm");
+    delay(1000);
+    int earnings = PIB*2 + (POS * 4);
+    Money += earnings;
+    Serial.print("Successfull trip! Earned $");
+    Serial.println(earnings);
   }
+  delay(2500);
+  step = 3;
+  Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
+  //Serial.println("How many would you like to put at bay?");
 }
 
 void RollDice(int DiceRoll){
@@ -98,36 +122,13 @@ void RollDice(int DiceRoll){
   else{
     //nothing here,  it's impossible to mess up
   }
+    Serial.println("Wait a few seconds...");    
     delay(2500);  
     display.clearDisplay();
     digitalWrite(led, LOW);
     lcd.clear();
 }
 
-void EarnMoney(int outcome){
-  if (outcome < 4){
-    int earnings = PIB + (POS * 2);
-    Money += earnings;
-    Serial.print("Successfull trip! Earned $");
-    Serial.println(earnings);
-  }else if(outcome > 5){
-    int Loss = POS * 10;
-    Money -= Loss;
-    Serial.print("Bad weather! Lost $");
-    Serial.println(Loss);
-  }else {
-    int earnings = PIB*2 + (POS * 4);
-    Money += earnings;
-    Serial.print("Successfull trip! Earned $");
-    Serial.println(earnings);
-  }
-  delay(5000);
-  step = 1;
-  Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
-  Serial.print("You currently have $");
-  Serial.println(Money);
-  Serial.println("How many would you like to put at bay?");
-}
 void loop() {
 
 if (Serial.available() > 0) {
@@ -142,8 +143,8 @@ if (Serial.available() > 0) {
 
     PIB = value;
 
-      if (PIB >= 0 && PIB <= InitialPots) {
-      PRB = InitialPots - PIB;
+      if (PIB >= 0 && PIB <= TotalPots) {
+      PRB = TotalPots - PIB;
 
       Serial.print("You've put ");
       Serial.print(PIB);
@@ -181,9 +182,72 @@ if (Serial.available() > 0) {
         Serial.println("Invalid number. Try again:");
       }
       int DiceRoll = random(1, 7);
+      //int DiceRoll = 6;
       Outcome(DiceRoll);
       RollDice(DiceRoll);
-      EarnMoney(outcome);
+      if (TotalPots == 0 && Money <= 0){
+        Serial.println("You have no more pots or money: GAME OVER!");
+        step = 0;
+      }
+    }
+  }
+
+  else if (step == 3) {
+
+    Serial.print("You currently have ");
+    Serial.println(TotalPots);
+    Serial.println("pots");
+
+    Serial.println("\n");    
+
+    Serial.print("You currently have: $");
+    Serial.println(Money);
+
+    Serial.println("\n");
+
+    Serial.print("Each pot costs $");
+    Serial.println(PotCost);
+
+    Serial.println("\n");
+
+    Serial.println("How many pots would you like to buy?");
+
+    while (Serial.available() == 0) {
+    // wait for input
+    }
+
+      String input = Serial.readStringUntil('\n');
+      input.trim();
+
+      PurchasedPots = input.toInt();
+
+      int TotalCost = PurchasedPots * PotCost;
+
+      if (PurchasedPots >= 0 && TotalCost <= Money) {
+
+      Money -= TotalCost;
+      TotalPots += PurchasedPots;
+
+      Serial.print("You bought ");
+      Serial.print(PurchasedPots);
+      Serial.println(" pots.");
+
+      Serial.print("Money Remaining: $");
+      Serial.println(Money);
+
+      Serial.print("Total Pots: ");
+      Serial.println(TotalPots);
+
+      Serial.println("\n--- NEXT ROUND ---");
+
+      step = 1;
+
+      Serial.println("How many pots would you like to put at bay?");
+      }
+
+      else {
+
+      Serial.println("Not enough money or invalid amount.");
     }
   }
 }
