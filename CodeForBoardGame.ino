@@ -16,29 +16,29 @@ int POS = -1; //Pots in Sea
 int step = 1; //Step-to-Step
 int Money = 10; //Money
 int PotCost = 2; //Cost of Pots
-int TotalPots = InitialPots; //At the start, both are the same.
+int TotalPots = InitialPots; //At the start, both are the same(For later rounds).
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600); //Starts Serial Monitor with 9600 baud rate
-  pinMode(led, OUTPUT);
+  Serial.begin(9600); //Starts Serial Monitor with a 9600 baud rate
+  pinMode(led, OUTPUT); //Creates the LED as an OUTPUT
   lcd.init(); //Powers LCD Screen on
   lcd.backlight();
   display.begin(); //Turns on Nokia LCD Module
 
-  display.setContrast(50);
-  display.clearDisplay();
-  Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
+  display.setContrast(50); //Sets contrast of backlight compared to the text
+  display.clearDisplay(); //Clears display before use
+  Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines
   Serial.println("You have 10 pots.");
   Serial.println("How many would you like to put at bay?"); //Asks question
 }
 
 void Outcome(int DiceRoll) { //Outcome calculation process
-  display.setTextSize(1);
-  display.setTextColor(BLACK);
-  display.setCursor(0, 0);
+  display.setTextSize(1); //Sets text size
+  display.setTextColor(BLACK); //Sets text colour
+  display.setCursor(0, 0); //Sets text position
   display.print("You Rolled: ");
   display.print(DiceRoll); //Displays value on Nokia Screen
   display.display();
@@ -67,7 +67,7 @@ void Outcome(int DiceRoll) { //Outcome calculation process
     Serial.println(Loss);
     Serial.print("pots");
   } 
-  else {
+  else { //If the dice rolls either a 4 or 5
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(5, 1);
