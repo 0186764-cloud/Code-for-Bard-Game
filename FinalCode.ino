@@ -4,6 +4,7 @@
 #include <Adafruit_PCD8544.h>
 #include <Wire.h>;
 //LIBRARY INITIALISATION - Imports Libraries so hardware can function
+
 const int led = 13; //Relates to the pin connected to the LED
 int outcome; //Outcome from diceroll
 int DiceRoll; //Signifies Dice Roll
@@ -21,17 +22,17 @@ Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(9600); //Starts Serial Monitor with 9600 baud rate
   pinMode(led, OUTPUT);
-  lcd.init();
+  lcd.init(); //Powers LCD Screen on
   lcd.backlight();
-  display.begin();
+  display.begin(); //Turns on Nokia LCD Module
 
   display.setContrast(50);
   display.clearDisplay();
   Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
   Serial.println("You have 10 pots.");
-  Serial.println("How many would you like to put at bay?");
+  Serial.println("How many would you like to put at bay?"); //Asks question
 }
 
 void Outcome(int DiceRoll) { //Outcome calculation process
@@ -39,7 +40,7 @@ void Outcome(int DiceRoll) { //Outcome calculation process
   display.setTextColor(BLACK);
   display.setCursor(0, 0);
   display.print("You Rolled: ");
-  display.print(DiceRoll); //Display's value on Nokia Screen
+  display.print(DiceRoll); //Displays value on Nokia Screen
   display.display();
   int outcome = DiceRoll;
   if (outcome < 4) { //If Dice Rolls a 1, 2 or a 3.
