@@ -84,7 +84,7 @@ void Outcome(int DiceRoll) { //Outcome calculation process
   //Serial.println("How many would you like to put at bay?");
 }
 void RollDice(int DiceRoll){ //DICE ANIMATION - Visually displays the dice results on the Nokia Screen.
-  if (DiceRoll > 0){ //nested if statements
+  if (DiceRoll > 0){ //nested if statements (Further Improvement?)
     display.fillCircle(32, 12, 4, BLACK);
     display.display();
     delay(1000);
@@ -122,10 +122,10 @@ void RollDice(int DiceRoll){ //DICE ANIMATION - Visually displays the dice resul
   else{
     //nothing here,  it's impossible to mess up
   }
-    Serial.println("Wait a few seconds...");    
-    delay(2500);  
+    Serial.println("Wait a few seconds..."); //Reminder for player not to meddle while calculating
+    delay(2500); //Maybe remove? 
     display.clearDisplay();
-    digitalWrite(led, LOW);
+    digitalWrite(led, LOW); //turns the LED off after a 6 is rolled.
     lcd.clear();
 }
 
@@ -138,7 +138,7 @@ if (Serial.available() > 0) {//checks if player typed something
 
     int value = input.toInt(); // convert to int
 
-// STEP 1
+// STEP 1 - BAY
     if (step == 1) {
 
     PIB = value; //relates to int value
@@ -161,7 +161,7 @@ if (Serial.available() > 0) {//checks if player typed something
     }
   }
 
-// STEP 2
+// STEP 2 - SEA
   else if (step == 2) {
 
   POS = value;
@@ -191,7 +191,7 @@ if (Serial.available() > 0) {//checks if player typed something
       }
     }
   }
-//STEP 3
+//STEP 3 - SHOP
   else if (step == 3) {
 
     Serial.print("You currently have ");
