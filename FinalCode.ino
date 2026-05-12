@@ -3,19 +3,19 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_PCD8544.h>
 #include <Wire.h>;
-
-const int led = 13;
-int outcome;
-int DiceRoll;
-int InitialPots = 10;
-int PurchasedPots = 0;
-int PIB = -1;
-int PRB = 0;
-int POS = -1;
-int step = 1;
-int Money = 10;
-int PotCost = 2;
-int TotalPots = InitialPots;
+//LIBRARY INITIALISATION - Imports Libraries so hardware can function
+const int led = 13; //Relates to the pin connected to the LED
+int outcome; //Outcome from diceroll
+int DiceRoll; //Signifies Dice Roll
+int InitialPots = 10; //Pots given at the start of the game
+int PurchasedPots = 0; //Pots purchased
+int PIB = -1; //Pots in bay
+int PRB = 0; //Pots Remaining after placed in bay
+int POS = -1; //Pots in Sea
+int step = 1; //Step-to-Step
+int Money = 10; //Money
+int PotCost = 2; //Cost of Pots
+int TotalPots = InitialPots; //At the start, both are the same.
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -34,34 +34,34 @@ void setup() {
   Serial.println("How many would you like to put at bay?");
 }
 
-void Outcome(int DiceRoll) {
+void Outcome(int DiceRoll) { //Outcome calculation process
   display.setTextSize(1);
   display.setTextColor(BLACK);
   display.setCursor(0, 0);
   display.print("You Rolled: ");
-  display.print(DiceRoll);
+  display.print(DiceRoll); //Display's value on Nokia Screen
   display.display();
   int outcome = DiceRoll;
-  if (outcome < 4) {
+  if (outcome < 4) { //If Dice Rolls a 1, 2 or a 3.
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(6, 1);
-    lcd.print("Calm");
+    lcd.print("Calm"); //Presents Outcome
     delay(1000);
-    int earnings = PIB + (POS * 2);
-    Money += earnings;
+    int earnings = PIB + (POS * 2); //Earn money
+    Money += earnings; //Added to total money
     Serial.print("Successfull trip! Earned $");
     Serial.println(earnings);
   } 
-  else if (outcome > 5) {
+  else if (outcome > 5) { //If Dice Rolls a 6
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(3, 1);
-    lcd.print("A CALAMITY");
-    digitalWrite(led, HIGH);
+    lcd.print("A CALAMITY"); //Presents Outcome
+    digitalWrite(led, HIGH); //Symbolises a Calamity or a 6
     delay(1000);
-    int Loss = POS;
-    TotalPots -= Loss;
+    int Loss = POS; //Lose pots
+    TotalPots -= Loss; //Lose pots + 0 money gain
     Serial.print("Bad weather! Lost ");
     Serial.println(Loss);
     Serial.print("pots");
@@ -70,9 +70,9 @@ void Outcome(int DiceRoll) {
     lcd.setCursor(6, 0);
     lcd.print("It's");
     lcd.setCursor(5, 1);
-    lcd.print("A Storm");
+    lcd.print("A Storm"); //Presents Outcome using LCD Screen
     delay(1000);
-    int earnings = PIB*2 + (POS * 4);
+    int earnings = PIB*2 + (POS * 4); //Earn but higher reward
     Money += earnings;
     Serial.print("Successfull trip! Earned $");
     Serial.println(earnings);
@@ -82,9 +82,8 @@ void Outcome(int DiceRoll) {
   Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
   //Serial.println("How many would you like to put at bay?");
 }
-
-void RollDice(int DiceRoll){
-  if (DiceRoll > 0){
+void RollDice(int DiceRoll){ //DICE ANIMATION - Visually displays the dice results on the Nokia Screen.
+  if (DiceRoll > 0){ //nested if statements
     display.fillCircle(32, 12, 4, BLACK);
     display.display();
     delay(1000);
@@ -129,9 +128,9 @@ void RollDice(int DiceRoll){
     lcd.clear();
 }
 
-void loop() {
+void loop() { //runs infinitely
 
-if (Serial.available() > 0) {
+if (Serial.available() > 0) {//checks if player typed something
 
     String input = Serial.readStringUntil('\n'); //Read Full line
     input.trim(); // remove spaces/newlines
@@ -141,20 +140,20 @@ if (Serial.available() > 0) {
 // STEP 1
     if (step == 1) {
 
-    PIB = value;
+    PIB = value; //relates to int value
 
-      if (PIB >= 0 && PIB <= TotalPots) {
+      if (PIB >= 0 && PIB <= TotalPots) {//prevents invalid inputs
       PRB = TotalPots - PIB;
 
       Serial.print("You've put ");
       Serial.print(PIB);
-      Serial.println(" pots at bay.");
+      Serial.println(" pots at bay."); //Displays on Serial Monitor
 
       Serial.print("Pots Remaining: ");
       Serial.println(PRB);
 
       Serial.println("\nHow many would you like to put at sea?");
-      step = 2;
+      step = 2; //Initiates Step 2
 
     } else {
     Serial.println("Invalid number. Try again:");
@@ -166,8 +165,8 @@ if (Serial.available() > 0) {
 
   POS = value;
 
-    if (POS >= 0 && POS <= PRB) {
-      int PRS = PRB - POS;
+    if (POS >= 0 && POS <= PRB) {//Similar to last time, validates for invalid inputs
+      int PRS = PRB - POS; //deducts Remaining pots from 
 
       Serial.print("You've put ");
       Serial.print(POS);
@@ -183,34 +182,34 @@ if (Serial.available() > 0) {
       }
       int DiceRoll = random(1, 7);
       //int DiceRoll = 6;
-      Outcome(DiceRoll);
-      RollDice(DiceRoll);
-      if (TotalPots == 0 && Money <= 0){
-        Serial.println("You have no more pots or money: GAME OVER!");
-        step = 0;
+      Outcome(DiceRoll); //Displays the Outcome
+      RollDice(DiceRoll); //Starts the Dice Rolling
+      if (TotalPots == 0 && Money <= 0){ //Checks if player doesn't have any more money or pots to use.
+        Serial.println("You have no more pots or money: GAME OVER!"); //Ultimately stops the game
+        step = 0; //stops the step process entirely.
       }
     }
   }
-
+//STEP 3
   else if (step == 3) {
 
     Serial.print("You currently have ");
     Serial.println(TotalPots);
-    Serial.println("pots");
+    Serial.println("pots"); //Displays Pots remaining after DiceRoll
 
     Serial.println("\n");    
 
     Serial.print("You currently have: $");
-    Serial.println(Money);
+    Serial.println(Money); //Displays total money before using shop.
 
     Serial.println("\n");
 
     Serial.print("Each pot costs $");
-    Serial.println(PotCost);
+    Serial.println(PotCost); //Displays Pot cost
 
     Serial.println("\n");
 
-    Serial.println("How many pots would you like to buy?");
+    Serial.println("How many pots would you like to buy?"); //Asks how many pots you would like to buy
 
     while (Serial.available() == 0) {
     // wait for input
@@ -219,14 +218,15 @@ if (Serial.available() > 0) {
       String input = Serial.readStringUntil('\n');
       input.trim();
 
-      PurchasedPots = input.toInt();
+      PurchasedPots = input.toInt(); //Converts typed number into amount bought
 
-      int TotalCost = PurchasedPots * PotCost;
+      int TotalCost = PurchasedPots * PotCost; //Cost calculation
 
-      if (PurchasedPots >= 0 && TotalCost <= Money) {
+      if (PurchasedPots >= 0 && TotalCost <= Money) { //prevents overspending
 
-      Money -= TotalCost;
+      Money -= TotalCost; 
       TotalPots += PurchasedPots;
+      //Calculations for purchases from shop
 
       Serial.print("You bought ");
       Serial.print(PurchasedPots);
