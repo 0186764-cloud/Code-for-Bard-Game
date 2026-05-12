@@ -226,28 +226,28 @@ if (Serial.available() > 0) {//checks if player typed something
 
       Money -= TotalCost; 
       TotalPots += PurchasedPots;
-      //Calculations for purchases from shop
+      //Calculations for purchases from the shop
 
       Serial.print("You bought ");
-      Serial.print(PurchasedPots);
+      Serial.print(PurchasedPots); //Displays the amount of pots purchased
       Serial.println(" pots.");
 
       Serial.print("Money Remaining: $");
-      Serial.println(Money);
+      Serial.println(Money); //Displays money remaining
 
       Serial.print("Total Pots: ");
-      Serial.println(TotalPots);
+      Serial.println(TotalPots); //Displays total pots after purchase
 
-      Serial.println("\n--- NEXT ROUND ---");
+      Serial.println("\n--- NEXT ROUND ---"); //Proceeds to Next Round
 
-      step = 1;
+      step = 1; //Resets the step process
 
-      Serial.println("How many pots would you like to put at bay?");
+      Serial.println("How many pots would you like to put at bay?"); //Asks the same question given at the start
       }
 
       else {
 
-      Serial.println("Not enough money or invalid amount.");
+      Serial.println("Not enough money or invalid amount."); //Invalid amount
     }
   }
 }
