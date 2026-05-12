@@ -20,6 +20,8 @@ int TotalPots = InitialPots; //At the start, both are the same(For later rounds)
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
+//Initialise two different types of displays by assigning specific communication parameters to  control in the sketch.
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600); //Starts Serial Monitor with a 9600 baud rate
