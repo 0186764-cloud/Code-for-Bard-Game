@@ -1,3 +1,10 @@
+//Explanation of the Game:
+//This game is called Crayfish. A game of resource management and chance. Inspired by a game I played in primary school, 
+//the player is trying to make the most money out of the competition. You place pots in either the bay or the sea. 
+//Depending on the role, you would either gain money or lose your pots. Pots may be purchased at the end of the round if 
+//the player desires to. 
+//(ONLY single player for now)
+
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
