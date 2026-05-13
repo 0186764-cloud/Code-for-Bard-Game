@@ -57,7 +57,7 @@ void Outcome(int DiceRoll) { //Outcome calculation process
     lcd.print("It's");
     lcd.setCursor(6, 1);
     lcd.print("Calm"); //Presents Outcome
-    delay(1000);
+    delay(1000); //Less delay required
     int earnings = PIB + (POS * 2); //Earn money
     Money += earnings; //Added to total money
     Serial.print("Successfull trip! Earned $");
@@ -69,7 +69,7 @@ void Outcome(int DiceRoll) { //Outcome calculation process
     lcd.setCursor(3, 1);
     lcd.print("A CALAMITY"); //Presents Outcome
     digitalWrite(led, HIGH); //Symbolises a Calamity or a 6
-    delay(1000);
+    delay(1000); //Less delay required
     int Loss = POS; //Lose pots
     TotalPots -= Loss; //Lose pots + 0 money gain
     Serial.print("Bad weather! Lost ");
@@ -81,13 +81,13 @@ void Outcome(int DiceRoll) { //Outcome calculation process
     lcd.print("It's");
     lcd.setCursor(5, 1);
     lcd.print("A Storm"); //Presents Outcome using LCD Screen
-    delay(1000);
+    delay(1000); //Less delay required
     int earnings = PIB*2 + (POS * 4); //Earn but higher reward
     Money += earnings;
     Serial.print("Successfull trip! Earned $");
     Serial.println(earnings);
   }
-  delay(2500);
+  delay(2500); //Less delay required
   step = 3;
   Serial.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //clears the serial monitor by starting new lines (NEW THING LEARNT)
   //Serial.println("How many would you like to put at bay?");
@@ -96,32 +96,32 @@ void RollDice(int DiceRoll){ //DICE ANIMATION - Visually displays the dice resul
   if (DiceRoll > 0){ //nested if statements (Further Improvement?)
     display.fillCircle(32, 12, 4, BLACK);
     display.display();
-    delay(1000);
+    delay(1000); //Less delay required
 
     if (DiceRoll > 1){
       display.fillCircle(52, 12, 4, BLACK);
       display.display();
-      delay(1000);
+      delay(1000); //Less delay required
 
       if (DiceRoll > 2){
         display.fillCircle(32, 24, 4, BLACK);
         display.display();
-        delay(1000);
+        delay(1000); //Less delay required
 
         if (DiceRoll > 3){
           display.fillCircle(52, 24, 4, BLACK);
           display.display(); 
-          delay(1000);
+          delay(1000); //Less delay required
 
           if (DiceRoll > 4){
             display.fillCircle(32, 36, 4, BLACK);
             display.display();
-            delay(1000);
+            delay(1000); //Less delay required
 
             if (DiceRoll > 5){
               display.fillCircle(52, 36, 4, BLACK);
               display.display();
-              delay(1000);
+              delay(1000); //Less delay required
             }
           }
         }
@@ -190,7 +190,7 @@ if (Serial.available() > 0) {//checks if player typed something
     } else {
         Serial.println("Invalid number. Try again:");
       }
-      int DiceRoll = random(1, 7);
+      int DiceRoll = random(1, 7); //Randomises the value of DiceRoll
       //int DiceRoll = 6;
       Outcome(DiceRoll); //Displays the Outcome
       RollDice(DiceRoll); //Starts the Dice Rolling
