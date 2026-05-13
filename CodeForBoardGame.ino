@@ -12,6 +12,7 @@
 #include <Wire.h>;
 //LIBRARY INITIALISATION - Imports Libraries so hardware can function
 
+//DECLARES VARIABLES
 const int led = 13; //Relates to the pin connected to the LED
 int outcome; //Outcome from diceroll
 int DiceRoll; //Signifies Dice Roll
