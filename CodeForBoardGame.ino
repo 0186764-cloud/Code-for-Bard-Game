@@ -3,7 +3,7 @@
 //The player is trying to make the most money out of the competition. You place pots in either the BAY or the SEA. 
 //Depending on the role, you would either gain money or lose your pots. Pots may be purchased at the end of the round if 
 //the player desires to. 
-//(ONLY single player for now)
+//(ONLY single player for now) - Inspired by Russian Roulette
 
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>
