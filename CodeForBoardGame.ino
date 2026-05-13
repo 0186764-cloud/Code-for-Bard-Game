@@ -178,7 +178,7 @@ if (Serial.available() > 0) {//checks if player typed something
       Serial.print("Pots Remaining: ");
       Serial.println(PRS);
 
-      Serial.println("\nDone.");
+      Serial.println("\nDone."); //Adds spacing between lines
 
     } else {
         Serial.println("Invalid number. Try again:");
@@ -200,17 +200,17 @@ if (Serial.available() > 0) {//checks if player typed something
     Serial.println(TotalPots);
     Serial.println("pots"); //Displays Pots remaining after DiceRoll
 
-    Serial.println("\n");    
+    Serial.println("\n"); //Adds spacing between lines
 
     Serial.print("You currently have: $");
     Serial.println(Money); //Displays total money before using shop.
 
-    Serial.println("\n");
+    Serial.println("\n"); //Adds spacing between lines
 
     Serial.print("Each pot costs $");
     Serial.println(PotCost); //Displays Pot cost
 
-    Serial.println("\n");
+    Serial.println("\n"); //Adds spacing between lines
 
     Serial.println("How many pots would you like to buy?"); //Asks how many pots you would like to buy
 
@@ -241,7 +241,7 @@ if (Serial.available() > 0) {//checks if player typed something
       Serial.print("Total Pots: ");
       Serial.println(TotalPots); //Displays total pots after purchase
 
-      Serial.println("\n--- NEXT ROUND ---"); //Proceeds to Next Round
+      Serial.println("\n--- NEXT ROUND ---"); //Proceeds to Next Round by creating a new line
 
       step = 1; //Resets the step process
 
