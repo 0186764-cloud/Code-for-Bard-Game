@@ -3,7 +3,7 @@
 //The player is trying to make the most money out of the competition. You 
 //place pots in either the BAY or the SEA. Depending on the role, you would 
 //either gain money or lose your pots. Pots may be purchased at the end of 
-//the round if the player desires to. - Inspired by the concept of Russian Roulette
+//the round if the player desires to. - Inspired by the concept of RUSSIAN ROULETTE
 //WARNING! You may get addicted to the thrill of this game
 
 #include <LiquidCrystal_I2C.h>
