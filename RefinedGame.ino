@@ -1,10 +1,10 @@
 //Explanation of the Game:
 //This game is called Crayfish. A game of resource management and chance. 
-//The player is trying to make the most money out of the competition. You place pots in either the BAY or the SEA. 
-//Depending on the role, you would either gain money or lose your pots. Pots may be purchased at the end of the round if 
-//the player desires to. 
-//(ONLY single player for now) - Inspired by the concept of Russian Roulette
-//WARNING, might get addicted to the thrill of this game
+//The player is trying to make the most money out of the competition. You 
+//place pots in either the BAY or the SEA. Depending on the role, you would 
+//either gain money or lose your pots. Pots may be purchased at the end of 
+//the round if the player desires to. - Inspired by the concept of Russian Roulette
+//WARNING! You may get addicted to the thrill of this game
 
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>
@@ -14,7 +14,7 @@
 //LIBRARY INITIALISATION - Imports Libraries so hardware can function
 
 //DECLARES VARIABLES
-const int led = 13; //relates to the rin connected to the LED
+const int led = 13; //relates to the pin connected to the LED
 int outcome; //Outcome from DiceRoll
 int DiceRoll; //Signifies DiceRoll
 int InitialPots = 10; //Pots given at the start
