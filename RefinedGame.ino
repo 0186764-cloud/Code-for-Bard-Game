@@ -1,9 +1,10 @@
 //Explanation of the Game:
-//This game is called Crayfish. A game of resource management and chance. Inspired by a game I played in primary school, 
+//This game is called Crayfish. A game of resource management and chance. 
 //The player is trying to make the most money out of the competition. You place pots in either the BAY or the SEA. 
 //Depending on the role, you would either gain money or lose your pots. Pots may be purchased at the end of the round if 
 //the player desires to. 
-//(ONLY single player for now) - Inspired by Russian Roulette
+//(ONLY single player for now) - Inspired by the concept of Russian Roulette
+//WARNING, might get addicted to the thrill of this game
 
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>
